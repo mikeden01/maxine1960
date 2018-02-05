@@ -1,0 +1,51 @@
+#C:\PROGRA~2\MICROF~1\ENTERP~1\bin\cobol.exe D:\git_baseline0\SBANK80P.CBL DELINT USED:\git_baseline0\New_Configuration.bin\mfant4894775663100307081.dir ;
+^D:\git_baseline0\SBANK80P.CBL
+!D:\git_baseline0\MBANK80.cpy
++D:\git_baseline0\MBANK80.cpy
+-D:\git_baseline0\MBANK80.cpy
+!D:\git_baseline0\CDATED.cpy
++D:\git_baseline0\CDATED.cpy
+-D:\git_baseline0\CDATED.cpy
+!D:\git_baseline0\CBANKDAT.cpy
++D:\git_baseline0\CBANKDAT.cpy
+-D:\git_baseline0\CBANKDAT.cpy
+!D:\git_baseline0\CBANKEXT.cpy
++D:\git_baseline0\CBANKEXT.cpy
+-D:\git_baseline0\CBANKEXT.cpy
+!D:\git_baseline0\CSCRNHDD.cpy
++D:\git_baseline0\CSCRNHDD.cpy
+-D:\git_baseline0\CSCRNHDD.cpy
+!D:\git_baseline0\DFHAID.cpy
+?D:\git_baseline0\DFHAID.cpy
+!D:\git_baseline0\DFHAID.cbl
+?D:\git_baseline0\DFHAID.cbl
+!$COBCPY\DFHAID.cpy
++"C:\Program Files (x86)\Micro Focus\Enterprise Developer\cpylib\DFHAID.cpy"
+-"C:\Program Files (x86)\Micro Focus\Enterprise Developer\cpylib\DFHAID.cpy"
+!D:\git_baseline0\DFHBMSCA.cpy
+?D:\git_baseline0\DFHBMSCA.cpy
+!D:\git_baseline0\DFHBMSCA.cbl
+?D:\git_baseline0\DFHBMSCA.cbl
+!$COBCPY\DFHBMSCA.cpy
++"C:\Program Files (x86)\Micro Focus\Enterprise Developer\cpylib\DFHBMSCA.cpy"
+-"C:\Program Files (x86)\Micro Focus\Enterprise Developer\cpylib\DFHBMSCA.cpy"
+!D:\git_baseline0\CABENDD.cpy
++D:\git_baseline0\CABENDD.cpy
+-D:\git_baseline0\CABENDD.cpy
+!D:\git_baseline0\CTRACE.cpy
++D:\git_baseline0\CTRACE.cpy
+-D:\git_baseline0\CTRACE.cpy
+!D:\git_baseline0\CABENDPO.cpy
++D:\git_baseline0\CABENDPO.cpy
+-D:\git_baseline0\CABENDPO.cpy
+!D:\git_baseline0\CABENDPO.cpy
++D:\git_baseline0\CABENDPO.cpy
+-D:\git_baseline0\CABENDPO.cpy
+!D:\git_baseline0\CABENDPO.cpy
++D:\git_baseline0\CABENDPO.cpy
+-D:\git_baseline0\CABENDPO.cpy
+!D:\git_baseline0\CSCRNHP1.cpy
++D:\git_baseline0\CSCRNHP1.cpy
+-D:\git_baseline0\CSCRNHP1.cpy
+!D:\git_baseline0\CSCRNHP2.cpy
++D:\git_baseline0\CSCRNHP2.cpy

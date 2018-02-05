@@ -1,0 +1,10 @@
+#C:\PROGRA~2\MICROF~1\ENTERP~1\bin\cobol.exe D:\git_baseline0\DBANK02P.CBL DELINT USED:\git_baseline0\New_Configuration.bin\mfant3713494496594016327.dir ;
+^D:\git_baseline0\DBANK02P.CBL
+!D:\git_baseline0\CABENDD.cpy
++D:\git_baseline0\CABENDD.cpy
+-D:\git_baseline0\CABENDD.cpy
+!D:\git_baseline0\CENTRY.cpy
++D:\git_baseline0\CENTRY.cpy
+-D:\git_baseline0\CENTRY.cpy
+!D:\git_baseline0\CRETURN.cpy
++D:\git_baseline0\CRETURN.cpy

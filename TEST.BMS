@@ -1,0 +1,687 @@
+*---------------------------------------------------------------------*
+*        VAGEN Map to CICS BMS Map Generation for PMS00M.PMS00M1      *
+*        Generation complete 25/03/2009 14:16:00                      *
+*        Copyright 2009 Micro Focus PLC. All Rights Reserved.         *
+*---------------------------------------------------------------------*
+         PRINT NOGEN
+PMS00M   DFHMSD TYPE=&SYSPARM,                                         X
+               LANG=COBOL,                                             X
+               MODE=INOUT,                                             X
+               TERM=3270-2,                                            X
+               CTRL=FREEKB,                                            X
+               EXTATT=YES,                                             X
+               STORAGE=AUTO,                                           X
+               TIOAPFX=YES
+*---------------------------------------------------------------------*
+PMS00M1  DFHMDI SIZE=(24,80),                                          X
+               LINE=1,                                                 X
+               COLUMN=1
+*---------------------------------------------------------------------*
+USERID   DFHMDF POS=(1,1),                                             X
+               LENGTH=4,                                               X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=OFF,                                            X
+               COLOR=GREEN
+*---------------------------------------------------------------------*
+         DFHMDF POS=(1,6),                                             X
+               LENGTH=1,                                               X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+UJLPOU   DFHMDF POS=(1,8),                                             X
+               LENGTH=13,                                              X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=OFF,                                            X
+               COLOR=GREEN
+*---------------------------------------------------------------------*
+         DFHMDF POS=(1,22),                                            X
+               LENGTH=35,                                              X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=OFF,                                            X
+               INITIAL='Product Management System Main Menu',          X
+               COLOR=GREEN
+*---------------------------------------------------------------------*
+         DFHMDF POS=(1,58),                                            X
+               LENGTH=7,                                               X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+TERMID   DFHMDF POS=(1,66),                                            X
+               LENGTH=4,                                               X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=OFF,                                            X
+               COLOR=GREEN
+*---------------------------------------------------------------------*
+         DFHMDF POS=(1,71),                                            X
+               LENGTH=1,                                               X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+TDATE    DFHMDF POS=(1,73),                                            X
+               LENGTH=7,                                               X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=OFF,                                            X
+               COLOR=GREEN
+*---------------------------------------------------------------------*
+         DFHMDF POS=(2,1),                                             X
+               LENGTH=159,                                             X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+         DFHMDF POS=(4,1),                                             X
+               LENGTH=48,                                              X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=OFF,                                            X
+               INITIAL='Select one of the following and then press EnteX
+               r',                                                     X
+               COLOR=TURQUOISE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(4,50),                                            X
+               LENGTH=110,                                             X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+         DFHMDF POS=(6,1),                                             X
+               LENGTH=10,                                              X
+               ATTRB=(NORM,PROT),                                      X
+               HILIGHT=OFF,                                            X
+               INITIAL='Selection:',                                   X
+               COLOR=TURQUOISE
+*---------------------------------------------------------------------*
+SEL1     DFHMDF POS=(6,12),                                            X
+               LENGTH=1,                                               X
+               ATTRB=(NORM,UNPROT,IC),                                 X
+               HILIGHT=REVERSE,                                        X
+               COLOR=YELLOW
+*---------------------------------------------------------------------*
+         DFHMDF POS=(6,14),                                            X
+               LENGTH=148,                                             X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT11    DFHMDF POS=(8,3),                                             X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='L',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(8,6),                                             X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION1  DFHMDF POS=(8,7),                                             X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Line Maintenance',                             X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(8,39),                                            X
+               LENGTH=43,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT12    DFHMDF POS=(9,3),                                             X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='N',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(9,6),                                             X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION2  DFHMDF POS=(9,7),                                             X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='New Line',                                     X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(9,39),                                            X
+               LENGTH=1,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT114   DFHMDF POS=(9,41),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='T',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(9,44),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION14 DFHMDF POS=(9,45),                                            X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Notes New Line',                               X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(9,77),                                            X
+               LENGTH=5,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT13    DFHMDF POS=(10,3),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='G',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(10,6),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION3  DFHMDF POS=(10,7),                                            X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Group Maintenance',                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(10,39),                                           X
+               LENGTH=43,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT14    DFHMDF POS=(11,3),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='M',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(11,6),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION4  DFHMDF POS=(11,7),                                            X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Multiple Updates',                             X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(11,39),                                           X
+               LENGTH=1,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT115   DFHMDF POS=(11,41),                                           X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='A',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(11,44),                                           X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION15 DFHMDF POS=(11,45),                                           X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Merchandising Single Update',                  X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(11,77),                                           X
+               LENGTH=5,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT15    DFHMDF POS=(12,3),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='B',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(12,6),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION5  DFHMDF POS=(12,7),                                            X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Barcode Enquiry',                              X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(12,39),                                           X
+               LENGTH=1,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT116   DFHMDF POS=(12,41),                                           X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='C',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(12,44),                                           X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION16 DFHMDF POS=(12,45),                                           X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Merchandising Multiple Updates',               X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(12,77),                                           X
+               LENGTH=5,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT117   DFHMDF POS=(13,3),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='P',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(13,6),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION17 DFHMDF POS=(13,7),                                            X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Promotion Maintenance',                        X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(13,39),                                           X
+               LENGTH=1,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT118   DFHMDF POS=(13,41),                                           X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='D',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(13,44),                                           X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION18 DFHMDF POS=(13,45),                                           X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Merchandising Layout Grp Split',               X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(13,77),                                           X
+               LENGTH=5,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT16    DFHMDF POS=(14,3),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='O',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(14,6),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION6  DFHMDF POS=(14,7),                                            X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Offer Maintenance',                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(14,39),                                           X
+               LENGTH=1,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT119   DFHMDF POS=(14,41),                                           X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='E',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(14,44),                                           X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION19 DFHMDF POS=(14,45),                                           X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Merchandising Split Copy Set-up',              X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(14,77),                                           X
+               LENGTH=5,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT17    DFHMDF POS=(15,3),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='F',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(15,6),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION7  DFHMDF POS=(15,7),                                            X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='FRV Supplier Negotiations',                    X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(15,39),                                           X
+               LENGTH=1,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT120   DFHMDF POS=(15,41),                                           X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='H',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(15,44),                                           X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION20 DFHMDF POS=(15,45),                                           X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Ticket Maintenance',                           X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(15,77),                                           X
+               LENGTH=5,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT18    DFHMDF POS=(16,3),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Q',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(16,6),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION8  DFHMDF POS=(16,7),                                            X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Print Assortment Changes',                     X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(16,39),                                           X
+               LENGTH=1,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT121   DFHMDF POS=(16,41),                                           X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='J',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(16,44),                                           X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION21 DFHMDF POS=(16,45),                                           X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Line Conversions',                             X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(16,77),                                           X
+               LENGTH=5,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT19    DFHMDF POS=(17,3),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='I',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(17,6),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPTION9  DFHMDF POS=(17,7),                                            X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Item Maintenance',                             X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(17,39),                                           X
+               LENGTH=43,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT110   DFHMDF POS=(18,3),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='S',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(18,6),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT10   DFHMDF POS=(18,7),                                             X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Supplier Maintenance',                         X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(18,39),                                           X
+               LENGTH=43,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT111   DFHMDF POS=(19,3),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='R',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(19,6),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT11   DFHMDF POS=(19,7),                                             X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Branch Maintenance',                           X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(19,39),                                           X
+               LENGTH=43,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT112   DFHMDF POS=(20,3),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Z',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(20,6),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT112   DFHMDF POS=(20,7),                                            X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Security Maintenance',                         X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(20,39),                                           X
+               LENGTH=43,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT113   DFHMDF POS=(21,3),                                            X
+               LENGTH=2,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Y',                                            X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(21,6),                                            X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+OPT1131  DFHMDF POS=(21,7),                                            X
+               LENGTH=31,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='Product Sector Maintenance',                   X
+               COLOR=WHITE
+*---------------------------------------------------------------------*
+         DFHMDF POS=(21,39),                                           X
+               LENGTH=121,                                             X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+EZEMSG   DFHMDF POS=(23,1),                                            X
+               LENGTH=78,                                              X
+               ATTRB=(BRT,ASKIP),                                      X
+               HILIGHT=OFF,                                            X
+               COLOR=RED
+*---------------------------------------------------------------------*
+         DFHMDF POS=(23,80),                                           X
+               LENGTH=0,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+         DFHMDF POS=(24,1),                                            X
+               LENGTH=9,                                               X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='F1=Help',                                      X
+               COLOR=GREEN
+*---------------------------------------------------------------------*
+PFTEXT   DFHMDF POS=(24,11),                                           X
+               LENGTH=41,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               INITIAL='F5=Buyer/Buying Admin switch   F12=Escape',    X
+               COLOR=GREEN
+*---------------------------------------------------------------------*
+         DFHMDF POS=(24,53),                                           X
+               LENGTH=27,                                              X
+               ATTRB=(NORM,ASKIP),                                     X
+               HILIGHT=OFF,                                            X
+               COLOR=NEUTRAL
+*---------------------------------------------------------------------*
+         DFHMSD TYPE=FINAL
+               END

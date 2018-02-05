@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ed_baseline0" default="combinedbuild" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
+	<taskdef resource="com/microfocus/ant/antlib.xml"/>
+	<!--  ***********************************  -->
+	<!--  * General property initialisation *  -->
+	<!--  ***********************************  -->
+	<property environment="env"/>
+	<property name="ed_baseline0" value="${basedir}"/>
+	<property name="cfg" value="New_Configuration"/>
+	<property name="cfgtarget" value="cfg.${cfg}"/>
+	<property name="forceCompile" value="true"/>
+	<property name="buildThreadCount" value="1"/>
+	<property name="useDirectiveSet" value="false"/>
+	<property name="connectionName" value=""/>
+	<property name="projectName" value=""/>
+	<property name="pathVar.PROJECT_LOC" value="${basedir}"/>
+	<property name="pathVar.WORKSPACE_LOC" value="${env.WORKSPACE_LOC}"/>
+	<property name="pathVar.ECLIPSE_HOME" value="${env.ECLIPSE_HOME}"/>
+	<property name="pathVar.PARENT_LOC" value="${env.PARENT_LOC}"/>
+	<property name="failOnError" value="false"/>
+	<property name="cobolFailOnError" value="${failOnError}"/>
+	<property name="cobollinkFailOnError" value="${failOnError}"/>
+	<property name="TESTCOVER_VALUE_ON" value="TESTCOVER"/>
+	<property name="TESTCOVER_VALUE_OFF" value="NOTESTCOVER"/>
+	<target name="printLocations">
+		<echo message="Project Location: &apos;project.ed_baseline0&apos;=${ed_baseline0}"/>
+		<echo message="Project Location: &apos;pathVar.PROJECT_LOC&apos;=${pathVar.PROJECT_LOC}"/>
+		<echo message="Project Location: &apos;pathVar.WORKSPACE_LOC&apos;=${pathVar.WORKSPACE_LOC}"/>
+		<echo message="Project Location: &apos;pathVar.ECLIPSE_HOME&apos;=${pathVar.ECLIPSE_HOME}"/>
+		<echo message="Project Location: &apos;pathVar.PARENT_LOC&apos;=${pathVar.PARENT_LOC}"/>
+	</target>
+	<!--  ******************************  -->
+	<!--  * OS-specific initialisation *  -->
+	<!--  ******************************  -->
+	<property name="bmsFailOnError" value="${failOnError}"/>
+	<condition property="windows">
+		<os family="windows"/>
+	</condition>
+	<condition property="unix">
+		<os family="unix"/>
+	</condition>
+	<ac:if>
+		<isset property="windows"/>
+		<then>
+			<property name="dllext" value=".dll"/>
+			<property name="exeext" value=".exe"/>
+			<property name="objext" value=".obj"/>
+			<property name="equalsInDir" value="="/>
+			<property name="pathVar.pS" value=";"/>
+			<property name="shell" value="cmd"/>
+			<property name="shell.ext" value=".bat"/>
+			<property name="shell.arg" value="/c"/>
+			<property name="script.header" value="@rem MS-DOS Batch File"/>
+		</then>
+	</ac:if>
+	<ac:if>
+		<isset property="unix"/>
+		<then>
+			<property name="dllext" value=".so"/>
+			<property name="exeext" value=""/>
+			<property name="objext" value=".o"/>
+			<property name="equalsInDir" value="="/>
+			<property name="pathVar.pS" value=":"/>
+			<property name="shell" value="sh"/>
+			<property name="shell.ext" value=".sh"/>
+			<property name="shell.arg" value="-c"/>
+			<property name="script.header" value="#!/bin/sh"/>
+		</then>
+	</ac:if>
+	<!-- Assembler Macro locations -->
+	<mffilelist id="assembler.macro.locations">
+		<path type="asmmacro" name="${ed_baseline0}"/>
+		<path type="asmmacro" name="${ed_baseline0}/.git"/>
+		<path type="asmmacro" name="${ed_baseline0}/.git/hooks"/>
+		<path type="asmmacro" name="${ed_baseline0}/.git/info"/>
+		<path type="asmmacro" name="${ed_baseline0}/.git/objects"/>
+		<path type="asmmacro" name="${ed_baseline0}/.git/objects/4b"/>
+		<path type="asmmacro" name="${ed_baseline0}/.git/objects/info"/>
+		<path type="asmmacro" name="${ed_baseline0}/.git/objects/pack"/>
+		<path type="asmmacro" name="${ed_baseline0}/.git/refs"/>
+		<path type="asmmacro" name="${ed_baseline0}/.git/refs/heads"/>
+		<path type="asmmacro" name="${ed_baseline0}/.git/refs/tags"/>
+	</mffilelist>
+	<!-- IMS Copy locations -->
+	<mffilelist id="ims.copy.locations">
+		<path type="imscpy" name="${ed_baseline0}"/>
+		<path type="imscpy" name="${ed_baseline0}/.git"/>
+		<path type="imscpy" name="${ed_baseline0}/.git/hooks"/>
+		<path type="imscpy" name="${ed_baseline0}/.git/info"/>
+		<path type="imscpy" name="${ed_baseline0}/.git/objects"/>
+		<path type="imscpy" name="${ed_baseline0}/.git/objects/4b"/>
+		<path type="imscpy" name="${ed_baseline0}/.git/objects/info"/>
+		<path type="imscpy" name="${ed_baseline0}/.git/objects/pack"/>
+		<path type="imscpy" name="${ed_baseline0}/.git/refs"/>
+		<path type="imscpy" name="${ed_baseline0}/.git/refs/heads"/>
+		<path type="imscpy" name="${ed_baseline0}/.git/refs/tags"/>
+	</mffilelist>
+	<!-- JCL include locations -->
+	<mffilelist id="jcl.include.locations">
+		<path type="jclinclude" name="${ed_baseline0}"/>
+		<path type="jclinclude" name="${ed_baseline0}/.git"/>
+		<path type="jclinclude" name="${ed_baseline0}/.git/hooks"/>
+		<path type="jclinclude" name="${ed_baseline0}/.git/info"/>
+		<path type="jclinclude" name="${ed_baseline0}/.git/objects"/>
+		<path type="jclinclude" name="${ed_baseline0}/.git/objects/4b"/>
+		<path type="jclinclude" name="${ed_baseline0}/.git/objects/info"/>
+		<path type="jclinclude" name="${ed_baseline0}/.git/objects/pack"/>
+		<path type="jclinclude" name="${ed_baseline0}/.git/refs"/>
+		<path type="jclinclude" name="${ed_baseline0}/.git/refs/heads"/>
+		<path type="jclinclude" name="${ed_baseline0}/.git/refs/tags"/>
+	</mffilelist>
+	<!-- Copypath enabled output locations -->
+	<mffilelist id="output.copybook.enabled.locations">
+		<path type="copybook" name="${ed_baseline0}"/>
+	</mffilelist>
+	<!--  ***************************  -->
+	<!--  * BMS compiler directives *  -->
+	<!--  ***************************  -->
+	<!-- bms_directive_set_1 -->
+	<mfdirlist id="bms_directive_set_1">
+		<directive name="/SYSPARM" id="dsect" value="DSECT"/>
+		<directive name="/DP" id="decimalchar" value="."/>
+		<directive name="/CS" id="currencychar" value="$"/>
+		<directive name="/IGNORE" id="sdf"/>
+		<directive name="/SYSPARM" id="map" value="MAP"/>
+	</mfdirlist>
+	<!--  ********************  -->
+	<!--  * BMS source files *  -->
+	<!--  ********************  -->
+	<!-- bms_file_set_1 -->
+	<mffilelist type="srcfile" id="bms_file_set_1" srcdir="${basedir}">
+		<file name="MBANK10.BMS"/>
+		<file name="MBANK20.BMS"/>
+		<file name="MBANK30.BMS"/>
+		<file name="MBANK40.BMS"/>
+		<file name="MBANK50.BMS"/>
+		<file name="MBANK60.BMS"/>
+		<file name="MBANK70.BMS"/>
+		<file name="MBANK80.BMS"/>
+		<file name="MBANK99.BMS"/>
+		<file name="MDEMO10.BMS"/>
+		<file name="MDEMO99.BMS"/>
+		<file name="TEST.BMS"/>
+	</mffilelist>
+	<target name="FileCompile.New_Configuration.MBANK10.BMS">
+		<bms useDirectiveSet="${useDirectiveSet}" srcfile="MBANK10.BMS" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+		</bms>
+	</target>
+	<target name="FileCompile.New_Configuration.MBANK20.BMS">
+		<bms useDirectiveSet="${useDirectiveSet}" srcfile="MBANK20.BMS" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+		</bms>
+	</target>
+	<target name="FileCompile.New_Configuration.MBANK30.BMS">
+		<bms useDirectiveSet="${useDirectiveSet}" srcfile="MBANK30.BMS" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+		</bms>
+	</target>
+	<target name="FileCompile.New_Configuration.MBANK40.BMS">
+		<bms useDirectiveSet="${useDirectiveSet}" srcfile="MBANK40.BMS" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+		</bms>
+	</target>
+	<target name="FileCompile.New_Configuration.MBANK50.BMS">
+		<bms useDirectiveSet="${useDirectiveSet}" srcfile="MBANK50.BMS" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+		</bms>
+	</target>
+	<target name="FileCompile.New_Configuration.MBANK60.BMS">
+		<bms useDirectiveSet="${useDirectiveSet}" srcfile="MBANK60.BMS" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+		</bms>
+	</target>
+	<target name="FileCompile.New_Configuration.MBANK70.BMS">
+		<bms useDirectiveSet="${useDirectiveSet}" srcfile="MBANK70.BMS" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+		</bms>
+	</target>
+	<target name="FileCompile.New_Configuration.MBANK80.BMS">
+		<bms useDirectiveSet="${useDirectiveSet}" srcfile="MBANK80.BMS" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+		</bms>
+	</target>
+	<target name="FileCompile.New_Configuration.MBANK99.BMS">
+		<bms useDirectiveSet="${useDirectiveSet}" srcfile="MBANK99.BMS" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+		</bms>
+	</target>
+	<target name="FileCompile.New_Configuration.MDEMO10.BMS">
+		<bms useDirectiveSet="${useDirectiveSet}" srcfile="MDEMO10.BMS" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+		</bms>
+	</target>
+	<target name="FileCompile.New_Configuration.MDEMO99.BMS">
+		<bms useDirectiveSet="${useDirectiveSet}" srcfile="MDEMO99.BMS" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+		</bms>
+	</target>
+	<target name="FileCompile.New_Configuration.TEST.BMS">
+		<bms useDirectiveSet="${useDirectiveSet}" srcfile="TEST.BMS" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+		</bms>
+	</target>
+	<!--  *****************************  -->
+	<!--  * COBOL compiler directives *  -->
+	<!--  *****************************  -->
+	<!-- cobol_directive_set_1 -->
+	<mfdirlist id="cobol_directive_set_1">
+		<directive name="DIALECT" id="dialect" value="ENTCOBOL"/>
+		<directive name="COPYEXT" id="copyext" value="cpy,cbl"/>
+		<directive name="NOPANVALET NOLIBRARIAN" id="mainframecopyhandling"/>
+		<directive name="WARNING" id="warning" value="1"/>
+		<directive name="NOCOBOLDIR" id="nocoboldir"/>
+		<directive name="MAX-ERROR" id="max-error" value="100"/>
+		<directive name="SOURCEFORMAT" id="sourceformat" value="fixed"/>
+		<directive name="CHARSET" id="charset" value="EBCDIC"/>
+		<directive name="SOURCETABSTOP" id="sourcetabstop" value="4"/>
+		<directive name="COLLECTION" id="collection" value="ed_baseline0"/>
+		<directive name="${TESTCOVER_VALUE_1}"/>
+	</mfdirlist>
+	<property name="TESTCOVER_VALUE_1" value="${TESTCOVER_VALUE_OFF}"/>
+	<!--  **********************  -->
+	<!--  * COBOL source files *  -->
+	<!--  **********************  -->
+	<!-- cobol_file_set_1 -->
+	<mffilelist type="srcfile" id="cobol_file_set_1" srcdir="${basedir}">
+		<file name="BBANK10P.cbl"/>
+		<file name="BBANK20P.CBL"/>
+		<file name="BBANK30P.CBL"/>
+		<file name="BBANK40P.CBL"/>
+		<file name="BBANK50P.CBL"/>
+		<file name="BBANK60P.CBL"/>
+		<file name="BBANK70P.CBL"/>
+		<file name="BBANK80P.CBL"/>
+		<file name="BBANK99P.CBL"/>
+		<file name="BDEMO10P.CBL"/>
+		<file name="BDEMO99P.CBL"/>
+		<file name="DBANK01P.CBL"/>
+		<file name="DBANK02P.CBL"/>
+		<file name="DBANK03P.CBL"/>
+		<file name="DBANK04P.CBL"/>
+		<file name="DBANK05P.CBL"/>
+		<file name="DBANK06P.CBL"/>
+		<file name="DBANK07P.CBL"/>
+		<file name="DBANK08P.CBL"/>
+		<file name="DBANK51P.CBL"/>
+		<file name="DBANK52P.CBL"/>
+		<file name="DHELP01P.CBL"/>
+		<file name="SBANK80P.CBL"/>
+		<file name="SBANK99P.CBL"/>
+		<file name="SCUSTOMP.CBL"/>
+		<file name="UDATECNV.cbl"/>
+		<file name="ZBNKE15.CBL"/>
+		<file name="ZBNKE35.CBL"/>
+	</mffilelist>
+	<!-- COBOL copybook locations -->
+	<mffilelist id="cobol.copybook.locations">
+		<path type="copybook" name="${ed_baseline0}"/>
+	</mffilelist>
+	<!--  ********************************  -->
+	<!--  * Source File Compile and Link *  -->
+	<!--  ********************************  -->
+	<!-- Configuration:New_Configuration -->
+	<target name="FileCompile.New_Configuration.BBANK10P.cbl">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="BBANK10P.cbl" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="BBANK10P" objectfile="BBANK10P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.BBANK20P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="BBANK20P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="BBANK20P" objectfile="BBANK20P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.BBANK30P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="BBANK30P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="BBANK30P" objectfile="BBANK30P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.BBANK40P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="BBANK40P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="BBANK40P" objectfile="BBANK40P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.BBANK50P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="BBANK50P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="BBANK50P" objectfile="BBANK50P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.BBANK60P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="BBANK60P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="BBANK60P" objectfile="BBANK60P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.BBANK70P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="BBANK70P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="BBANK70P" objectfile="BBANK70P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.BBANK80P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="BBANK80P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="BBANK80P" objectfile="BBANK80P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.BBANK99P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="BBANK99P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="BBANK99P" objectfile="BBANK99P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.BDEMO10P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="BDEMO10P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="BDEMO10P" objectfile="BDEMO10P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.BDEMO99P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="BDEMO99P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="BDEMO99P" objectfile="BDEMO99P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.DBANK01P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="DBANK01P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="DBANK01P" objectfile="DBANK01P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.DBANK02P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="DBANK02P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="DBANK02P" objectfile="DBANK02P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.DBANK03P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="DBANK03P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="DBANK03P" objectfile="DBANK03P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.DBANK04P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="DBANK04P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="DBANK04P" objectfile="DBANK04P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.DBANK05P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="DBANK05P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="DBANK05P" objectfile="DBANK05P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.DBANK06P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="DBANK06P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="DBANK06P" objectfile="DBANK06P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.DBANK07P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="DBANK07P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="DBANK07P" objectfile="DBANK07P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.DBANK08P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="DBANK08P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="DBANK08P" objectfile="DBANK08P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.DBANK51P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="DBANK51P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="DBANK51P" objectfile="DBANK51P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.DBANK52P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="DBANK52P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="DBANK52P" objectfile="DBANK52P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.DHELP01P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="DHELP01P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="DHELP01P" objectfile="DHELP01P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.SBANK80P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="SBANK80P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="SBANK80P" objectfile="SBANK80P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.SBANK99P.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="SBANK99P.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="SBANK99P" objectfile="SBANK99P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.SCUSTOMP.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="SCUSTOMP.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="SCUSTOMP" objectfile="SCUSTOMP${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.UDATECNV.cbl">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="UDATECNV.cbl" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="UDATECNV" objectfile="UDATECNV${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.ZBNKE15.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="ZBNKE15.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="ZBNKE15" objectfile="ZBNKE15${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="FileCompile.New_Configuration.ZBNKE35.CBL">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" srcfile="ZBNKE35.CBL" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" srcdir="${basedir}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+		</cobol>
+		<cobollink debug="true" destfile="ZBNKE35" objectfile="ZBNKE35${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<!--  ****************  -->
+	<!--  * Object files *  -->
+	<!--  ****************  -->
+	<!-- Default -->
+	<mffilelist id="cobol.default.object.files" srcdir="${basedir}/New_Configuration.bin" type="objfile">
+		<file name="BBANK10P${objext}"/>
+		<file name="BBANK20P${objext}"/>
+		<file name="BBANK30P${objext}"/>
+		<file name="BBANK40P${objext}"/>
+		<file name="BBANK50P${objext}"/>
+		<file name="BBANK60P${objext}"/>
+		<file name="BBANK70P${objext}"/>
+		<file name="BBANK80P${objext}"/>
+		<file name="BBANK99P${objext}"/>
+		<file name="BDEMO10P${objext}"/>
+		<file name="BDEMO99P${objext}"/>
+		<file name="DBANK01P${objext}"/>
+		<file name="DBANK02P${objext}"/>
+		<file name="DBANK03P${objext}"/>
+		<file name="DBANK04P${objext}"/>
+		<file name="DBANK05P${objext}"/>
+		<file name="DBANK06P${objext}"/>
+		<file name="DBANK07P${objext}"/>
+		<file name="DBANK08P${objext}"/>
+		<file name="DBANK51P${objext}"/>
+		<file name="DBANK52P${objext}"/>
+		<file name="DHELP01P${objext}"/>
+		<file name="SBANK80P${objext}"/>
+		<file name="SBANK99P${objext}"/>
+		<file name="SCUSTOMP${objext}"/>
+		<file name="UDATECNV${objext}"/>
+		<file name="ZBNKE15${objext}"/>
+		<file name="ZBNKE35${objext}"/>
+	</mffilelist>
+	<!-- cfg.New_Configuration -->
+	<target name="combinedbuild.cfg.New_Configuration" depends="printLocations,pre.build.cfg.New_Configuration,bms.cfg.New_Configuration,asm.cfg.New_Configuration,ims.cfg.New_Configuration,nature.specific.build.cfg.New_Configuration,post.build.cfg.New_Configuration">
+	</target>
+	<target name="imscobbuild.cfg.New_Configuration" depends="printLocations,pre.build.cfg.New_Configuration,ims.cfg.New_Configuration,nature.specific.build.cfg.New_Configuration,post.build.cfg.New_Configuration">
+	</target>
+	<target name="bmsbuild.cfg.New_Configuration" depends="printLocations,bms.cfg.New_Configuration">
+	</target>
+	<target name="asm.cfg.New_Configuration">
+		<echo message="No Assembler programs to compile"/>
+		<echo message="No Assembler Linker files to compile"/>
+	</target>
+	<target name="bms.cfg.New_Configuration">
+		<bms useDirectiveSet="${useDirectiveSet}" destdir="${basedir}/New_Configuration.bin" threadCount="${buildThreadCount}" failonerror="${bmsFailOnError}" forceCompile="${forceCompile}">
+			<mfdirlist refid="bms_directive_set_1"/>
+			<mffilelist refid="bms_file_set_1"/>
+		</bms>
+	</target>
+	<target name="ims.cfg.New_Configuration">
+		<echo message="No DBD files to compile"/>
+		<echo message="No MFS files to compile"/>
+		<echo message="No PSB files to compile"/>
+	</target>
+	<target name="New_Configuration.FileCompile.Local">
+		<ac:for list="${filesList.Local}" param="filename" keepgoing="true" trim="true">
+			<sequential>
+				<ac:if>
+					<not>
+						<isset property="isCancelled"/>
+					</not>
+					<then>
+						<ac:antcallback target="FileCompile.New_Configuration.@{filename}" inheritAll="true" return="isCancelled">
+							<param name="filename" value="@{filename}"/>
+						</ac:antcallback>
+					</then>
+				</ac:if>
+			</sequential>
+		</ac:for>
+	</target>
+	<!--  *************************  -->
+	<!--  * Configuration targets *  -->
+	<!--  *************************  -->
+	<!-- cfg.New_Configuration -->
+	<target name="cobolbuild.cfg.New_Configuration" depends="printLocations,pre.build.cfg.New_Configuration,nature.specific.build.cfg.New_Configuration,post.build.cfg.New_Configuration"/>
+	<target name="nature.specific.build.cfg.New_Configuration" depends="cobol.cfg.New_Configuration"/>
+	<target name="cobol.cfg.New_Configuration" depends="cobol.compile.cfg.New_Configuration,cobol.link.cfg.New_Configuration"/>
+	<target name="New_Configuration.FileCompile">
+		<ac:for list="${filesList}" param="filename" keepgoing="true" trim="true">
+			<sequential>
+				<ac:if>
+					<not>
+						<isset property="isCancelled"/>
+					</not>
+					<then>
+						<ac:antcallback target="FileCompile.New_Configuration.@{filename}" inheritAll="true" return="isCancelled">
+						</ac:antcallback>
+					</then>
+				</ac:if>
+			</sequential>
+		</ac:for>
+	</target>
+	<target name="cobol.compile.cfg.New_Configuration">
+		<cobol debug="true" analysisData="${analysisData}" threadCount="${buildThreadCount}" threadedRts="true" analysisDataDir="${analysisDataDir}" useDirectiveSet="${useDirectiveSet}" destdir="${basedir}/New_Configuration.bin" is64bit="false" failonerror="${cobolFailOnError}" forceCompile="${forceCompile}" connectionName="${connectionName}" projectName="${projectName}" desttype="obj">
+			<mffilelist refid="cobol.copybook.locations"/>
+			<mfdirlist refid="cobol_directive_set_1"/>
+			<mffilelist refid="cobol_file_set_1"/>
+		</cobol>
+	</target>
+	<target name="cobol.link.cfg.New_Configuration">
+		<cobollink debug="true" destfile="BBANK10P" objectfile="BBANK10P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="BBANK20P" objectfile="BBANK20P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="BBANK30P" objectfile="BBANK30P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="BBANK40P" objectfile="BBANK40P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="BBANK50P" objectfile="BBANK50P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="BBANK60P" objectfile="BBANK60P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="BBANK70P" objectfile="BBANK70P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="BBANK80P" objectfile="BBANK80P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="BBANK99P" objectfile="BBANK99P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="BDEMO10P" objectfile="BDEMO10P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="BDEMO99P" objectfile="BDEMO99P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="DBANK01P" objectfile="DBANK01P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="DBANK02P" objectfile="DBANK02P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="DBANK03P" objectfile="DBANK03P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="DBANK04P" objectfile="DBANK04P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="DBANK05P" objectfile="DBANK05P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="DBANK06P" objectfile="DBANK06P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="DBANK07P" objectfile="DBANK07P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="DBANK08P" objectfile="DBANK08P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="DBANK51P" objectfile="DBANK51P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="DBANK52P" objectfile="DBANK52P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="DHELP01P" objectfile="DHELP01P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="SBANK80P" objectfile="SBANK80P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="SBANK99P" objectfile="SBANK99P${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="SCUSTOMP" objectfile="SCUSTOMP${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="UDATECNV" objectfile="UDATECNV${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="ZBNKE15" objectfile="ZBNKE15${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+		<cobollink debug="true" destfile="ZBNKE35" objectfile="ZBNKE35${objext}" entrypoint="" sharedRts="true" destdir="${basedir}/New_Configuration.bin" is64bit="false" objectdir="${basedir}/New_Configuration.bin" failonerror="${cobollinkFailOnError}" desttype="dll/cso" threadedRts="true">
+		</cobollink>
+	</target>
+	<target name="pre.build.cfg.New_Configuration">
+	</target>
+	<target name="post.build.cfg.New_Configuration">
+	</target>
+	<target name="clean.cfg.New_Configuration">
+		<bmsclean dsect="true" dsectExtension=".cpy" failonerror="${bmsFailOnError}" binarydir="${basedir}/New_Configuration.bin" copydir="${basedir}" map="true" verbose="false">
+			<mfdirlist refid="bms_directive_set_1"/>
+			<mffilelist refid="bms_file_set_1"/>
+			<mffilelist delete="false" refid="output.copybook.enabled.locations"/>
+		</bmsclean>
+		<cobolclean debug="true" destdir="${basedir}/New_Configuration.bin" desttype="dll">
+			<mffilelist refid="cobol_file_set_1"/>
+		</cobolclean>
+	</target>
+	<!--  *******************  -->
+	<!--  * General targets *  -->
+	<!--  *******************  -->
+	<target name="compileSourceLocally">
+		<antcall target="${cfg}.FileCompile.Local" inheritAll="true"/>
+	</target>
+	<target name="clean">
+		<antcall target="clean.${cfgtarget}" inheritAll="true"/>
+	</target>
+	<target name="compileSource">
+		<antcall target="${cfg}.FileCompile" inheritAll="true"/>
+	</target>
+	<target name="compile" depends="compileSourceLocally,compileSource">
+	</target>
+	<target name="combinedbuild">
+		<antcall target="combinedbuild.${cfgtarget}" inheritAll="true"/>
+	</target>
+	<target name="imscobbuild">
+		<antcall target="imscobbuild.${cfgtarget}" inheritAll="true"/>
+	</target>
+	<target name="bmsbuild">
+		<antcall target="bmsbuild.${cfgtarget}" inheritAll="true"/>
+	</target>
+	<target name="cobolbuild">
+		<antcall target="cobolbuild.${cfgtarget}" inheritAll="true"/>
+	</target>
+</project>
